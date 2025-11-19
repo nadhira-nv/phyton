@@ -1,0 +1,60 @@
+import streamlit as st
+
+# 1. Judul Aplikasi
+st.title("Penentu Nilai Huruf Otomatis 📝")
+st.markdown("Masukkan nilai angka Anda (0-100) untuk mendapatkan nilai huruf.")
+
+# 2. Input Nilai dari Pengguna
+# Kita gunakan number_input dengan batas minimum dan maksimum
+nilai = st.number_input(
+    "Masukkan nilai Anda:",
+    min_value=0.0,
+    max_value=100.0,
+    value=75.0, # Nilai default
+    step=0.1,
+    help="Nilai harus dalam rentang 0 hingga 100."
+)
+
+# 3. Tombol untuk Menjalankan Penilaian
+if st.button("Cek Nilai"):
+    # Logika Penilaian (Diambil langsung dari kode Python Anda)
+    
+    nilai_huruf = ""
+    
+    # Cek nilai tidak valid (di luar rentang 0-100)
+    if nilai > 100 or nilai < 0:
+        nilai_huruf = "Nilai tidak valid"
+        st.error("Nilai Anda tidak valid (di luar rentang 0-100) ❌")
+        
+    # Cek Nilai A (85-100)
+    elif nilai >= 85:
+        nilai_huruf = "A"
+        st.balloons() # Efek visual
+        st.success(f"Nilai Anda **A**! Kerja bagus! 🎉")
+        
+    # Cek Nilai B (70-84.99...)
+    elif nilai >= 70:
+        nilai_huruf = "B"
+        st.info(f"Nilai Anda **B**! Pertahankan! 👍")
+        
+    # Cek Nilai C (55-69.99...)
+    elif nilai >= 55:
+        nilai_huruf = "C"
+        st.warning(f"Nilai Anda **C**. Tingkatkan lagi. ⚠️")
+        
+    # Cek Nilai D (40-54.99...)
+    elif nilai >= 40:
+        nilai_huruf = "D"
+        st.error(f"Nilai Anda **D**. Perlu banyak belajar! 😥")
+        
+    # Sisanya adalah Nilai E (0-39.99...)
+    else:
+        nilai_huruf = "E"
+        st.error(f"Nilai Anda **E**. Gagal. 😢")
+
+    # Tampilkan rangkuman
+    if nilai_huruf != "Nilai tidak valid":
+        st.markdown("---")
+        st.subheader("Ringkasan Hasil")
+        st.write(f"Nilai Angka: **{nilai}**")
+        st.write(f"Nilai Huruf: **{nilai_huruf}**")
